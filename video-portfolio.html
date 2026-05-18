@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Portfolio — Ashish Singh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300..700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Art direction: Space engineering portfolio → technical, refined, dark-first
+       Palette: Cool neutrals, teal accent
+       Typography: Instrument Serif (display) + DM Sans (body)
+       Density: Spacious */
+
+    :root, [data-theme="light"] {
+      --color-bg:             #f7f6f2;
+      --color-surface:        #f9f8f5;
+      --color-surface-2:      #fbfbf9;
+      --color-surface-offset: #f3f0ec;
+      --color-divider:        #dcd9d5;
+      --color-border:         #d4d1ca;
+      --color-text:           #28251d;
+      --color-text-muted:     #7a7974;
+      --color-text-faint:     #bab9b4;
+      --color-primary:        #01696f;
+      --color-primary-hover:  #0c4e54;
+      --shadow-sm: 0 1px 2px oklch(0.2 0.01 80 / 0.06);
+      --shadow-md: 0 4px 12px oklch(0.2 0.01 80 / 0.10);
+      --shadow-lg: 0 12px 32px oklch(0.2 0.01 80 / 0.14);
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --radius-full: 9999px;
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-body: 'DM Sans', 'Helvetica Neue', sans-serif;
+      --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+      --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+      --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+      --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+      --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+      --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
+      --text-3xl:  clamp(2.5rem,   1rem    + 4vw,    5rem);
+      --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+      --space-4: 1rem;    --space-5: 1.25rem; --space-6: 1.5rem;
+      --space-8: 2rem;    --space-10: 2.5rem; --space-12: 3rem;
+      --space-16: 4rem;   --space-20: 5rem;   --space-24: 6rem;
+      --transition-interactive: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+      --content-default: 960px;
+      --content-narrow: 640px;
+    }
+
+    [data-theme="dark"] {
+      --color-bg:             #111010;
+      --color-surface:        #181716;
+      --color-surface-2:      #1e1d1b;
+      --color-surface-offset: #252422;
+      --color-divider:        #2a2826;
+      --color-border:         #343230;
+      --color-text:           #cdccca;
+      --color-text-muted:     #797876;
+      --color-text-faint:     #4f4e4c;
+      --color-primary:        #4f98a3;
+      --color-primary-hover:  #6cb8c2;
+      --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.25);
+      --shadow-md: 0 4px 16px oklch(0 0 0 / 0.35);
+      --shadow-lg: 0 16px 40px oklch(0 0 0 / 0.45);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --color-bg: #111010; --color-surface: #181716; --color-surface-2: #1e1d1b;
+        --color-surface-offset: #252422; --color-divider: #2a2826; --color-border: #343230;
+        --color-text: #cdccca; --color-text-muted: #797876; --color-text-faint: #4f4e4c;
+        --color-primary: #4f98a3; --color-primary-hover: #6cb8c2;
+        --shadow-sm: 0 1px 2px oklch(0 0 0/0.25);
+        --shadow-md: 0 4px 16px oklch(0 0 0/0.35);
+        --shadow-lg: 0 16px 40px oklch(0 0 0/0.45);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; scroll-behavior: smooth; scroll-padding-top: var(--space-16); }
+    body { min-height: 100dvh; line-height: 1.6; font-family: var(--font-body); font-size: var(--text-base); color: var(--color-text); background-color: var(--color-bg); }
+    img, video { display: block; max-width: 100%; height: auto; }
+    ul[role="list"] { list-style: none; }
+    input, button, textarea, select { font: inherit; color: inherit; }
+    h1, h2, h3, h4 { text-wrap: balance; line-height: 1.15; }
+    p, li { text-wrap: pretty; max-width: 72ch; }
+    button { cursor: pointer; background: none; border: none; }
+    a, button, [role="button"] {
+      transition: color var(--transition-interactive), background var(--transition-interactive),
+                  border-color var(--transition-interactive), box-shadow var(--transition-interactive),
+                  opacity var(--transition-interactive);
+    }
+    :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: var(--radius-sm); }
+    ::selection { background: oklch(from var(--color-primary) l c h / 0.2); color: var(--color-text); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* ─── Layout ─── */
+    .container { max-width: var(--content-default); margin-inline: auto; padding-inline: clamp(var(--space-4), 5vw, var(--space-8)); }
+
+    /* ─── Header / Nav ─── */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: color-mix(in oklch, var(--color-bg) 85%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid oklch(from var(--color-text) l c h / 0.08);
+    }
+    nav {
+      max-width: var(--content-default); margin-inline: auto;
+      padding-inline: clamp(var(--space-4), 5vw, var(--space-8));
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: var(--space-2);
+      text-decoration: none; color: var(--color-text);
+    }
+    .nav-logo svg { color: var(--color-primary); }
+    .nav-logo-text { font-family: var(--font-display); font-size: var(--text-lg); letter-spacing: -0.01em; }
+    .nav-actions { display: flex; align-items: center; gap: var(--space-2); }
+    .theme-toggle {
+      width: 36px; height: 36px; border-radius: var(--radius-full);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-text-muted);
+      border: 1px solid oklch(from var(--color-text) l c h / 0.1);
+    }
+    .theme-toggle:hover { color: var(--color-text); background: var(--color-surface-offset); }
+
+    /* ─── Hero ─── */
+    .hero {
+      padding-block: clamp(var(--space-16), 10vw, var(--space-24));
+      text-align: center;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      background: oklch(from var(--color-primary) l c h / 0.1);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-6);
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: 400;
+      color: var(--color-text);
+      margin-bottom: var(--space-4);
+      letter-spacing: -0.02em;
+    }
+    .hero h1 em { font-style: italic; color: var(--color-primary); }
+    .hero-sub {
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+      max-width: 52ch;
+      margin-inline: auto;
+      margin-bottom: var(--space-8);
+      line-height: 1.7;
+    }
+    .hero-actions { display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--color-primary);
+      color: #fff;
+      border: 1px solid var(--color-primary);
+    }
+    .btn-primary:hover { background: var(--color-primary-hover); border-color: var(--color-primary-hover); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-text-muted);
+      border: 1px solid oklch(from var(--color-text) l c h / 0.15);
+    }
+    .btn-ghost:hover { background: var(--color-surface-offset); color: var(--color-text); border-color: oklch(from var(--color-text) l c h / 0.25); }
+
+    /* ─── How to host section ─── */
+    .steps-section { padding-block: clamp(var(--space-12), 6vw, var(--space-20)); }
+    .section-label {
+      font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--color-text-faint);
+      margin-bottom: var(--space-3);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl); font-weight: 400;
+      color: var(--color-text); margin-bottom: var(--space-10);
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+      gap: var(--space-4);
+    }
+    .step-card {
+      background: var(--color-surface);
+      border: 1px solid oklch(from var(--color-text) l c h / 0.07);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      display: flex; flex-direction: column; gap: var(--space-3);
+      transition: box-shadow var(--transition-interactive), transform var(--transition-interactive);
+    }
+    .step-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .step-number {
+      font-family: var(--font-display); font-size: var(--text-xl); font-style: italic;
+      color: var(--color-primary); line-height: 1;
+    }
+    .step-card h3 { font-size: var(--text-base); font-weight: 600; color: var(--color-text); }
+    .step-card p { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.6; flex: 1; }
+    .step-code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.78rem;
+      background: var(--color-surface-offset);
+      border: 1px solid var(--color-divider);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      color: var(--color-primary);
+      overflow-x: auto;
+      white-space: nowrap;
+      line-height: 1.5;
+    }
+
+    /* ─── Video Demo / Player Section ─── */
+    .player-section { padding-block: clamp(var(--space-12), 6vw, var(--space-20)); }
+    .player-outer {
+      background: var(--color-surface);
+      border: 1px solid oklch(from var(--color-text) l c h / 0.08);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .player-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-3) var(--space-5);
+      border-bottom: 1px solid var(--color-divider);
+      gap: var(--space-4);
+    }
+    .player-dots { display: flex; gap: var(--space-2); }
+    .player-dots span {
+      width: 10px; height: 10px; border-radius: var(--radius-full);
+      background: var(--color-divider);
+    }
+    .player-dots span:nth-child(1) { background: #ff5f56; }
+    .player-dots span:nth-child(2) { background: #ffbd2e; }
+    .player-dots span:nth-child(3) { background: #27c93f; }
+    .player-url-bar {
+      flex: 1; max-width: 400px;
+      background: var(--color-surface-offset);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      padding: var(--space-1) var(--space-4);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .player-body {
+      position: relative;
+      background: #000;
+      aspect-ratio: 16/9;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .player-body video {
+      width: 100%; height: 100%; object-fit: contain;
+    }
+    .player-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: var(--space-4);
+      color: var(--color-text-faint);
+      background: linear-gradient(160deg, #0d1015 0%, #101416 100%);
+      user-select: none;
+    }
+    .player-placeholder-icon {
+      width: 64px; height: 64px; border-radius: var(--radius-full);
+      background: oklch(from var(--color-primary) l c h / 0.12);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-primary);
+    }
+    .player-placeholder p { font-size: var(--text-sm); color: var(--color-text-muted); max-width: 36ch; text-align: center; }
+    .player-placeholder small { font-size: var(--text-xs); color: var(--color-text-faint); }
+    .player-controls {
+      display: flex; align-items: center; gap: var(--space-4);
+      padding: var(--space-4) var(--space-5);
+      border-top: 1px solid var(--color-divider);
+      flex-wrap: wrap;
+    }
+    .ctrl-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: var(--radius-full);
+      border: 1px solid oklch(from var(--color-text) l c h / 0.1);
+      color: var(--color-text-muted);
+      background: none;
+    }
+    .ctrl-btn:hover { background: var(--color-surface-offset); color: var(--color-text); }
+    .progress-bar-wrap { flex: 1; min-width: 120px; cursor: pointer; }
+    .progress-track {
+      height: 4px; background: var(--color-divider); border-radius: var(--radius-full);
+      position: relative; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; background: var(--color-primary); width: 0%; border-radius: var(--radius-full);
+      transition: width 0.1s linear;
+    }
+    .time-label { font-size: var(--text-xs); color: var(--color-text-muted); white-space: nowrap; }
+
+    /* ─── Options/Hosting Methods ─── */
+    .options-section { padding-block: clamp(var(--space-12), 6vw, var(--space-20)); }
+    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+    @media (max-width: 640px) { .options-grid { grid-template-columns: 1fr; } }
+    .option-card {
+      background: var(--color-surface);
+      border: 1px solid oklch(from var(--color-text) l c h / 0.07);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+    }
+    .option-card.featured {
+      border-color: oklch(from var(--color-primary) l c h / 0.3);
+      background: color-mix(in oklch, var(--color-primary) 5%, var(--color-surface));
+    }
+    .option-badge {
+      display: inline-block; font-size: var(--text-xs); font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 2px var(--space-2); border-radius: var(--radius-full);
+      background: oklch(from var(--color-primary) l c h / 0.12);
+      color: var(--color-primary); margin-bottom: var(--space-3);
+    }
+    .option-card h3 { font-size: var(--text-base); font-weight: 600; margin-bottom: var(--space-2); }
+    .option-card p { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.65; margin-bottom: var(--space-4); }
+    .option-pros { list-style: none; display: flex; flex-direction: column; gap: var(--space-1); }
+    .option-pros li { font-size: var(--text-xs); color: var(--color-text-muted); display: flex; align-items: center; gap: var(--space-2); }
+    .option-pros li::before { content: "✓"; color: var(--color-primary); font-weight: 700; flex-shrink: 0; }
+
+    /* ─── Divider ─── */
+    .divider { border: none; border-top: 1px solid var(--color-divider); margin-block: 0; }
+
+    /* ─── Footer ─── */
+    footer {
+      padding-block: var(--space-8);
+      border-top: 1px solid var(--color-divider);
+      text-align: center;
+      color: var(--color-text-faint);
+      font-size: var(--text-xs);
+    }
+    footer a { color: var(--color-text-muted); text-decoration: none; }
+    footer a:hover { color: var(--color-text); }
+
+    /* ─── Upload demo area ─── */
+    .upload-zone {
+      border: 2px dashed oklch(from var(--color-primary) l c h / 0.35);
+      border-radius: var(--radius-xl);
+      padding: var(--space-10) var(--space-8);
+      text-align: center;
+      cursor: pointer;
+      transition: border-color var(--transition-interactive), background var(--transition-interactive);
+      margin-top: var(--space-6);
+    }
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: var(--color-primary);
+      background: oklch(from var(--color-primary) l c h / 0.05);
+    }
+    .upload-zone input { display: none; }
+    .upload-icon { color: var(--color-primary); margin-inline: auto; margin-bottom: var(--space-3); }
+    .upload-zone h3 { font-size: var(--text-base); font-weight: 600; margin-bottom: var(--space-2); }
+    .upload-zone p { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .upload-btn {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      margin-top: var(--space-4);
+      padding: var(--space-2) var(--space-5);
+      background: var(--color-primary);
+      color: #fff; border-radius: var(--radius-full);
+      font-size: var(--text-sm); font-weight: 500;
+      cursor: pointer; border: none;
+    }
+    .upload-btn:hover { background: var(--color-primary-hover); }
+
+    /* ─── Tab nav ─── */
+    .tab-nav {
+      display: flex; gap: var(--space-1);
+      background: var(--color-surface);
+      border: 1px solid var(--color-divider);
+      border-radius: var(--radius-full);
+      padding: 4px;
+      width: fit-content;
+      margin-bottom: var(--space-8);
+    }
+    .tab-btn {
+      padding: var(--space-2) var(--space-5);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm); font-weight: 500;
+      color: var(--color-text-muted);
+      cursor: pointer; border: none; background: none;
+      transition: background var(--transition-interactive), color var(--transition-interactive);
+    }
+    .tab-btn.active {
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .tab-btn:hover:not(.active) { color: var(--color-text); background: var(--color-surface-offset); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    @media (max-width: 600px) {
+      .steps-grid { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      nav .nav-logo-text { font-size: var(--text-base); }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0;">Skip to content</a>
+
+<!-- Header -->
+<header>
+  <nav aria-label="Main navigation">
+    <a href="#" class="nav-logo" aria-label="Ashish Singh portfolio home">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="2" y="2" width="11" height="11" rx="2" fill="currentColor" opacity="0.8"/>
+        <rect x="15" y="2" width="11" height="11" rx="2" fill="currentColor" opacity="0.4"/>
+        <rect x="2" y="15" width="11" height="11" rx="2" fill="currentColor" opacity="0.4"/>
+        <path d="M15 15 L26 20.5 L15 26 Z" fill="currentColor" opacity="0.9"/>
+      </svg>
+      <span class="nav-logo-text">Ashish Singh</span>
+    </a>
+    <div class="nav-actions">
+      <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="padding: var(--space-2) var(--space-4);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.014-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.461-1.11-1.461-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.417 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        GitHub
+      </a>
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to light mode">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- Main -->
+<main id="main-content">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-tag">Video Portfolio</div>
+      <h1>Share your video <em>anywhere</em><br>with a Git link.</h1>
+      <p class="hero-sub">Host your project videos on GitHub/GitLab, get a shareable public link, and embed a clean web player in your portfolio — no subscriptions, no ads.</p>
+      <div class="hero-actions">
+        <a href="#how-it-works" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          How it works
+        </a>
+        <a href="#player-demo" class="btn btn-ghost">See demo player</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- How It Works Steps -->
+  <section class="steps-section" id="how-it-works">
+    <div class="container">
+      <p class="section-label">Step-by-step</p>
+      <h2 class="section-title">From file to shareable link in 4 steps</h2>
+
+      <div class="tab-nav" role="tablist">
+        <button class="tab-btn active" role="tab" aria-selected="true" onclick="switchTab('github')">GitHub</button>
+        <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('gitlab')">GitLab</button>
+      </div>
+
+      <div id="tab-github" class="tab-content active">
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">01</div>
+            <h3>Create a public repo</h3>
+            <p>Go to GitHub and create a new public repository. Name it something like <code>portfolio-videos</code> or add it to your existing portfolio repo.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">02</div>
+            <h3>Push your video file</h3>
+            <p>Commit and push your video (MP4, WebM) to the repo. Keep files under 100MB for direct commits, or use Git LFS for larger files.</p>
+            <div class="step-code">git add video.mp4<br>git commit -m "Add portfolio video"<br>git push origin main</div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">03</div>
+            <h3>Get the raw URL</h3>
+            <p>On GitHub, click your video file → click the <strong>Raw</strong> button. Copy that URL — it's a direct link to your video file.</p>
+            <div class="step-code">https://raw.githubusercontent.com/<br>username/repo/main/video.mp4</div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">04</div>
+            <h3>Embed in your portfolio</h3>
+            <p>Use the raw URL as the <code>src</code> in an HTML <code>&lt;video&gt;</code> tag on your portfolio page. Done — instant web player!</p>
+            <div class="step-code">&lt;video controls width="100%"&gt;<br>&nbsp;&nbsp;&lt;source src="YOUR_RAW_URL"<br>&nbsp;&nbsp;&nbsp;&nbsp;type="video/mp4"&gt;<br>&lt;/video&gt;</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-gitlab" class="tab-content">
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">01</div>
+            <h3>Create a public project</h3>
+            <p>On GitLab, create a new project with visibility set to <strong>Public</strong>. GitLab works great for larger files too.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">02</div>
+            <h3>Push your video file</h3>
+            <p>Commit and push your MP4/WebM video. GitLab supports files up to 5GB (vs GitHub's 100MB limit), making it ideal for large project videos.</p>
+            <div class="step-code">git add video.mp4<br>git commit -m "Add portfolio video"<br>git push origin main</div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">03</div>
+            <h3>Get the raw URL</h3>
+            <p>Navigate to your file in GitLab → click <strong>Open raw</strong>. Copy the URL from the address bar.</p>
+            <div class="step-code">https://gitlab.com/username/<br>repo/-/raw/main/video.mp4</div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">04</div>
+            <h3>Embed in your portfolio</h3>
+            <p>Paste the raw URL into a <code>&lt;video&gt;</code> tag. GitLab serves the file with correct MIME types, so browsers play it natively.</p>
+            <div class="step-code">&lt;video controls width="100%"&gt;<br>&nbsp;&nbsp;&lt;source src="YOUR_RAW_URL"<br>&nbsp;&nbsp;&nbsp;&nbsp;type="video/mp4"&gt;<br>&lt;/video&gt;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Live Player Demo -->
+  <section class="player-section" id="player-demo">
+    <div class="container">
+      <p class="section-label">Interactive Demo</p>
+      <h2 class="section-title">Try the player with your own video</h2>
+      <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-8);max-width:60ch;">Paste a raw GitHub/GitLab URL below, or drag & drop a local video file to preview how it will look in your portfolio.</p>
+
+      <!-- URL input -->
+      <div style="display:flex;gap:var(--space-3);margin-bottom:var(--space-6);flex-wrap:wrap;">
+        <input type="url" id="videoUrlInput" placeholder="https://raw.githubusercontent.com/user/repo/main/video.mp4"
+          style="flex:1;min-width:200px;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-full);padding:var(--space-3) var(--space-5);font-size:var(--text-sm);color:var(--color-text);outline:none;">
+        <button class="btn btn-primary" onclick="loadVideoFromUrl()">
+          Load URL
+        </button>
+      </div>
+
+      <!-- Player shell -->
+      <div class="player-outer" id="playerShell">
+        <div class="player-topbar">
+          <div class="player-dots" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="player-url-bar" id="playerUrlBar">No video loaded yet</div>
+          <div style="font-size:var(--text-xs);color:var(--color-text-faint);">HTML5 Player</div>
+        </div>
+        <div class="player-body" id="playerBody">
+          <video id="videoEl" style="display:none;width:100%;height:100%;object-fit:contain;" preload="metadata"></video>
+          <div class="player-placeholder" id="playerPlaceholder">
+            <div class="player-placeholder-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <p>Paste a raw video URL above or drop a file here</p>
+            <small>Supports MP4, WebM, OGG</small>
+          </div>
+        </div>
+        <div class="player-controls" id="playerControls" style="display:none;">
+          <button class="ctrl-btn" id="playPauseBtn" onclick="togglePlay()" aria-label="Play">
+            <svg id="playIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <svg id="pauseIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none" aria-hidden="true"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          </button>
+          <div class="progress-bar-wrap" onclick="seekVideo(event)" role="slider" aria-label="Video progress" tabindex="0">
+            <div class="progress-track">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+          <span class="time-label" id="timeLabel">0:00 / 0:00</span>
+          <button class="ctrl-btn" onclick="toggleMute()" aria-label="Mute">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path id="volPath" d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </button>
+          <button class="ctrl-btn" onclick="toggleFullscreen()" aria-label="Fullscreen">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Upload zone -->
+      <div class="upload-zone" id="uploadZone"
+        ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)"
+        onclick="document.getElementById('fileInput').click()">
+        <input type="file" id="fileInput" accept="video/*" onchange="handleFileSelect(event)">
+        <div class="upload-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <h3>Or drop a local video file</h3>
+        <p>Drag & drop your MP4, WebM, or OGG video here to preview it locally</p>
+        <button class="upload-btn" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Choose file
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Hosting Options -->
+  <section class="options-section" id="options">
+    <div class="container">
+      <p class="section-label">Where to host</p>
+      <h2 class="section-title">Best hosting options for portfolio videos</h2>
+      <div class="options-grid">
+        <div class="option-card featured">
+          <div class="option-badge">Recommended</div>
+          <h3>GitHub Raw (+ GitHub Pages)</h3>
+          <p>Push your video to a public repo. GitHub Pages serves your HTML portfolio, and raw.githubusercontent.com serves the video. Both free, same workflow you already use.</p>
+          <ul class="option-pros" role="list">
+            <li>100% free, no extra account</li>
+            <li>Version-controlled videos</li>
+            <li>Custom domain support via Pages</li>
+            <li>Up to 100MB per file (Git LFS for more)</li>
+          </ul>
+        </div>
+        <div class="option-card">
+          <div class="option-badge" style="background:oklch(from var(--color-text-faint) l c h / 0.15);color:var(--color-text-muted);">Alternative</div>
+          <h3>GitLab CI/CD + Pages</h3>
+          <p>Similar to GitHub but with a 5GB file size limit, making it better for high-res demo videos. GitLab CI can auto-deploy your portfolio on every push.</p>
+          <ul class="option-pros" role="list">
+            <li>5GB file size limit (50× GitHub)</li>
+            <li>Free private repos with CI/CD</li>
+            <li>Built-in container registry</li>
+            <li>CORS-friendly raw file serving</li>
+          </ul>
+        </div>
+        <div class="option-card">
+          <div class="option-badge" style="background:oklch(from var(--color-text-faint) l c h / 0.15);color:var(--color-text-muted);">External</div>
+          <h3>Cloudflare R2 + Pages</h3>
+          <p>Upload videos to Cloudflare R2 (S3-compatible, free egress), link from your GitHub Pages portfolio. Best for very large or high-traffic video files.</p>
+          <ul class="option-pros" role="list">
+            <li>Free egress (unlike S3)</li>
+            <li>10GB free storage</li>
+            <li>Global CDN edge delivery</li>
+            <li>Direct public bucket URLs</li>
+          </ul>
+        </div>
+        <div class="option-card">
+          <div class="option-badge" style="background:oklch(from var(--color-text-faint) l c h / 0.15);color:var(--color-text-muted);">Quickest</div>
+          <h3>YouTube / Vimeo (Unlisted)</h3>
+          <p>Upload as unlisted, share only via direct link or embedded iframe. Zero self-hosting setup. Great for very large files or if you want built-in analytics.</p>
+          <ul class="option-pros" role="list">
+            <li>Zero hosting setup</li>
+            <li>Unlimited file size</li>
+            <li>Built-in player & subtitles</li>
+            <li>Easy iframe embed code</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>Built with HTML5 &mdash; video served from <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;
+  let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+  r.setAttribute('data-theme',d);
+  t&&t.addEventListener('click',()=>{
+    d=d==='dark'?'light':'dark';
+    r.setAttribute('data-theme',d);
+    t.setAttribute('aria-label','Switch to '+(d==='dark'?'light':'dark')+' mode');
+    t.innerHTML=d==='dark'
+      ?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+      :'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+  });
+})();
+
+// Tab switching
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => {
+    el.classList.remove('active');
+    el.setAttribute('aria-selected','false');
+  });
+  document.getElementById('tab-'+tab).classList.add('active');
+  const btn = document.querySelector('[onclick="switchTab(\''+tab+'\')"]');
+  if(btn){ btn.classList.add('active'); btn.setAttribute('aria-selected','true'); }
+}
+
+// Video Player
+const vid = document.getElementById('videoEl');
+const placeholder = document.getElementById('playerPlaceholder');
+const controls = document.getElementById('playerControls');
+const progressFill = document.getElementById('progressFill');
+const timeLabel = document.getElementById('timeLabel');
+const urlBar = document.getElementById('playerUrlBar');
+
+function formatTime(s) {
+  const m = Math.floor(s/60);
+  const sec = Math.floor(s%60).toString().padStart(2,'0');
+  return m+':'+sec;
+}
+
+function showPlayer(src, label) {
+  vid.src = src;
+  vid.style.display = 'block';
+  placeholder.style.display = 'none';
+  controls.style.display = 'flex';
+  urlBar.textContent = label || src;
+  vid.load();
+}
+
+vid.addEventListener('timeupdate', () => {
+  if(vid.duration) {
+    progressFill.style.width = (vid.currentTime/vid.duration*100)+'%';
+    timeLabel.textContent = formatTime(vid.currentTime)+' / '+formatTime(vid.duration);
+  }
+});
+
+vid.addEventListener('ended', () => {
+  document.getElementById('playIcon').style.display = '';
+  document.getElementById('pauseIcon').style.display = 'none';
+});
+
+function togglePlay() {
+  if(vid.paused) {
+    vid.play();
+    document.getElementById('playIcon').style.display = 'none';
+    document.getElementById('pauseIcon').style.display = '';
+  } else {
+    vid.pause();
+    document.getElementById('playIcon').style.display = '';
+    document.getElementById('pauseIcon').style.display = 'none';
+  }
+}
+
+function seekVideo(e) {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  vid.currentTime = pct * vid.duration;
+}
+
+function toggleMute() { vid.muted = !vid.muted; }
+
+function toggleFullscreen() {
+  const body = document.getElementById('playerBody');
+  if(!document.fullscreenElement) body.requestFullscreen?.();
+  else document.exitFullscreen?.();
+}
+
+function loadVideoFromUrl() {
+  const url = document.getElementById('videoUrlInput').value.trim();
+  if(!url) return;
+  showPlayer(url, url.length > 60 ? '…'+url.slice(-50) : url);
+}
+
+document.getElementById('videoUrlInput').addEventListener('keydown', e => {
+  if(e.key === 'Enter') loadVideoFromUrl();
+});
+
+// File drop
+function handleDragOver(e) {
+  e.preventDefault();
+  document.getElementById('uploadZone').classList.add('drag-over');
+}
+function handleDragLeave(e) {
+  document.getElementById('uploadZone').classList.remove('drag-over');
+}
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('uploadZone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if(file && file.type.startsWith('video/')) {
+    const url = URL.createObjectURL(file);
+    showPlayer(url, file.name + ' (local file)');
+  }
+}
+function handleFileSelect(e) {
+  const file = e.target.files[0];
+  if(file) {
+    const url = URL.createObjectURL(file);
+    showPlayer(url, file.name + ' (local file)');
+  }
+}
+</script>
+
+</body>
+</html>
